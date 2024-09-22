@@ -5,8 +5,8 @@ public class Engenheiro {
     private String registro;
 
     public Engenheiro(String nome, String registro) {
-        this.nome = nome;
-        this.registro = registro;
+        setNome(nome);
+        setRegistro(registro);
     }
 
     // Getters e Setters
@@ -15,7 +15,10 @@ public class Engenheiro {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;  // Permite atualizar o nome do engenheiro
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome não pode ser vazio.");
+        }
+        this.nome = nome;
     }
 
     public String getRegistro() {
@@ -23,6 +26,9 @@ public class Engenheiro {
     }
 
     public void setRegistro(String registro) {
-        this.registro = registro;  // Permite atualizar o registro do engenheiro
+        if (registro == null || registro.trim().isEmpty()) {
+            throw new IllegalArgumentException("Registro não pode ser vazio.");
+        }
+        this.registro = registro;
     }
 }

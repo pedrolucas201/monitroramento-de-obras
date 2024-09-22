@@ -1,41 +1,47 @@
 package entities;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public abstract class Obra {
     private String nome;
     private Engenheiro engenheiro;
-    private List<Tarefa> tarefas;
+    private String tipo;
 
-    public Obra(String nome, Engenheiro engenheiro) {
-        this.nome = nome;
-        this.engenheiro = engenheiro;
-        this.tarefas = new ArrayList<>();
+    public Obra(String nome, Engenheiro engenheiro, String tipo) {
+        setNome(nome);
+        setEngenheiro(engenheiro);
+        setTipo(tipo);
     }
 
+    // Getters e Setters
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome da obra não pode ser vazio.");
+        }
+        this.nome = nome;
     }
 
     public Engenheiro getEngenheiro() {
         return engenheiro;
     }
 
-    public List<Tarefa> getTarefas() {
-        return tarefas;
+    public void setEngenheiro(Engenheiro engenheiro) {
+        if (engenheiro == null) {
+            throw new IllegalArgumentException("Engenheiro não pode ser nulo.");
+        }
+        this.engenheiro = engenheiro;
     }
 
-    public void adicionarTarefa(Tarefa tarefa) {
-        this.tarefas.add(tarefa);
+    public String getTipo() {
+        return tipo;
     }
 
-    public abstract String getTipo();
-
-    public abstract void setTipo(String tipo);  // Adiciona um método abstrato para setar o tipo
-
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setTipo(String tipo) {
+        if (tipo == null || tipo.trim().isEmpty()) {
+            throw new IllegalArgumentException("Tipo de obra não pode ser vazio.");
+        }
+        this.tipo = tipo;
     }
-
 }
