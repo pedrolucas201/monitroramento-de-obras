@@ -171,6 +171,10 @@ public class ObraMonitorGUI extends JFrame {
         // Atualizar a lista de obras e limpar campos de texto
         atualizarListaObras();
         limparCampos();
+
+        iPlanejamentoServico.adicionarObra(obra);
+        Obra ultimaObra = iPlanejamentoServico.visualizarUltimaObra(); // Visualiza a última obra
+        JOptionPane.showMessageDialog(this, "Última obra adicionada: " + ultimaObra.toString(), "Sucesso", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void limparCampos() {
@@ -244,14 +248,18 @@ public class ObraMonitorGUI extends JFrame {
     private void excluirObra() {
         String nomeObraSelecionada = (String) listaObrasCombo.getSelectedItem();
         if (nomeObraSelecionada != null) {
-            iPlanejamentoServico.removerObra(nomeObraSelecionada);
-            JOptionPane.showMessageDialog(this, "Obra excluída com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-            atualizarListaObras();
-            limparCampos();
-            atualizarObraButton.setEnabled(false);
-            excluirObraButton.setEnabled(false);
+            Obra obraRemovida = iPlanejamentoServico.desempilharObra(); // Desempilha a obra
+            if (obraRemovida != null) {
+                iPlanejamentoServico.removerObra(nomeObraSelecionada);
+                JOptionPane.showMessageDialog(this, "Obra excluída com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                atualizarListaObras();
+                limparCampos();
+                atualizarObraButton.setEnabled(false);
+                excluirObraButton.setEnabled(false);
+            }
         }
     }
+
 
     private void atualizarListaObras() {
         listaObrasArea.setText("");

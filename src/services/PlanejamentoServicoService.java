@@ -5,9 +5,11 @@ import interfaces.IObrasRepositorio;
 import interfaces.IPlanejamentoServico;
 
 import java.util.List;
+import java.util.Stack;
 
 public class PlanejamentoServicoService implements IPlanejamentoServico {
     private IObrasRepositorio repositorio;
+    private Stack<Obra> pilhaObras = new Stack<>(); // Pilha para armazenar as obras
 
     public PlanejamentoServicoService(IObrasRepositorio repositorio) {
         this.repositorio = repositorio;
@@ -15,10 +17,8 @@ public class PlanejamentoServicoService implements IPlanejamentoServico {
 
     @Override
     public void adicionarObra(Obra obra) {
-        if (obra == null) {
-            throw new IllegalArgumentException("A obra não pode ser nula.");
-        }
         repositorio.adicionarObra(obra);
+        pilhaObras.push(obra); // Adiciona a obra à pilha
     }
 
     @Override
@@ -28,17 +28,22 @@ public class PlanejamentoServicoService implements IPlanejamentoServico {
 
     @Override
     public Obra buscarObra(String nomeObra) {
-        if (nomeObra == null || nomeObra.isEmpty()) {
-            throw new IllegalArgumentException("O nome da obra não pode ser nulo ou vazio.");
-        }
         return repositorio.buscarObra(nomeObra);
     }
 
     @Override
     public void removerObra(String nomeObra) {
-        if (nomeObra == null || nomeObra.isEmpty()) {
-            throw new IllegalArgumentException("O nome da obra não pode ser nulo ou vazio.");
-        }
         repositorio.removerObra(nomeObra);
     }
+
+    @Override
+    public Obra visualizarUltimaObra() {
+        return pilhaObras.isEmpty() ? null : pilhaObras.peek(); // Retorna a última obra sem remover
+    }
+
+    @Override
+    public Obra desempilharObra() {
+        return pilhaObras.isEmpty() ? null : pilhaObras.pop(); // Remove e retorna a última obra
+    }
 }
+

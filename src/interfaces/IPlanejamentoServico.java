@@ -8,4 +8,9 @@ public interface IPlanejamentoServico {
     List<Obra> listarObras();
     Obra buscarObra(String nomeObra);
     void removerObra(String nomeObra);
+
+    // Novos métodos
+    Obra visualizarUltimaObra();
+    Obra desempilharObra();
 }
+
